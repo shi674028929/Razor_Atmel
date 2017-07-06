@@ -20,8 +20,19 @@ Header file for main.c.
 /***********************************************************************************************************************
 * Constant Definitions
 ***********************************************************************************************************************/
+#define MAX_DRINKS   (u8)10
+#define _BIT3 0x01<<12
+#define _BIT4 0X01<<11
 /* G_u32ApplicationFlags definitions are in configuration.h */
 
+
+/************************************************************* 
+
+* Type Definitions 
+
+*************************************************************/ 
+
+typedef enum{EMPTY1,BEER,SHOOTER,WINE,HIBALL}DrinkType;
 /* G_u32SystemFlags */
 #define _SYSTEM_CLOCK_NO_STOP_DEBUG     (u32)0x00000001        /* DEBUG module preventing STOP mode */
 #define _SYSTEM_CLOCK_NO_STOP_LEDS      (u32)0x00000002        /* LED module preventing STOP mode */
