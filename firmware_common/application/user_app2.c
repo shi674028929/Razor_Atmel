@@ -74,6 +74,20 @@ Promises:
 */
 void UserApp2Initialize(void)
 {
+   LedOff(YELLOW);   
+   LedOff(WHITE);
+   LedOff(RED);
+   LedOff(GREEN);
+   LedOff(PURPLE);
+
+
+
+
+
+   
+
+  
+ 
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -122,13 +136,38 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp2SM_Idle(void)
 {
+    static u16 u16Counter=0;//time counter
+    static LedRateType eLedDutyLevel=LED_PWM_0;
+    static u8 u8Counter2=0;
     
-} /* end UserApp2SM_Idle() */
+    u16Counter++;
+        
+    if(u16Counter==40)//40ms
+    {				
+        LedPWM(WHITE,eLedDutyLevel);
+        u16Counter=0;
+        
+        if(u8Counter2++<20)//up
+        {
+            eLedDutyLevel++;
+        }
+        else//down
+        {
+            eLedDutyLevel--;
+            
+            if(u8Counter2==40)
+            {
+                u8Counter2=0;
+            }
+        }
+    }
+} /* end UserAppSM_Idle() */
+
      
 #if 0
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Handle an error */
-static void UserApp2SM_Error(void)          
+static void UserApp2SM_Error(void) 
 {
   
 } /* end UserApp2SM_Error() */

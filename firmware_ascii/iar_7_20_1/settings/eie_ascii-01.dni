@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-233304312
+Checksum=-1071427954
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -24,6 +24,19 @@ CStepIntDis=_ 0
 TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000000
+[struct_types]
+Fmt0=ServerType-u8ServerNumber	3	0
+[watch_formats]
+Fmt0={W}3:u16NumBit1	4	0
+Fmt1={W}3:u16NumBit2	4	0
+Fmt2={W}3:u8CorrectNumber	3	0
+Fmt3={W}3:u8Counter2	3	0
+Fmt4={W}3:u8CurrentServer	3	0
+Fmt5={W}3:u8DataCheckBit	0	2
+Fmt6={W}3:u8PassWord	3	0
+Fmt7={W}3:u8Press4	3	0
+Fmt8={W}3:u8PressCounter	3	0
+Fmt9={W}3:u8Test	4	0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -42,7 +55,8 @@ Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\firmware_common\application\user_app2.c}.169.1" 0 0 1 "" 0 "" 0
+Count=1
 [Aliases]
 Count=0
 SuppressDialog=0

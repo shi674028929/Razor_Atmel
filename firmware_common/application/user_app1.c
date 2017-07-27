@@ -41,7 +41,9 @@ Global variable definitions with scope across entire project.
 All Global variable names shall start with "G_UserApp1"
 ***********************************************************************************************************************/
 /* New variables */
-volatile u32 G_u32UserApp1Flags;                       /* Global state flags */
+volatile u32 G_u32UserApp1Flags; 
+
+                      /* Global state flags */
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -87,6 +89,7 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
+  
  
   /* If good initialization, set state to Idle */
   if( 1 )
@@ -136,8 +139,10 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
-
-} /* end UserApp1SM_Idle() */
+   
+  
+} 
+  /* end UserApp1SM_Idle() */
     
 
 /*-------------------------------------------------------------------------------------------------------------------*/
