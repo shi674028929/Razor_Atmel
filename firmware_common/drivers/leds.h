@@ -40,6 +40,11 @@ typedef enum {LED_PORTA = 0, LED_PORTB = 0x80} LedPortType;  /* Offset between p
 typedef enum {LED_ACTIVE_LOW = 0, LED_ACTIVE_HIGH = 1} LedActiveType;
 typedef enum {LED_PWM_DUTY_LOW = 0, LED_PWM_DUTY_HIGH = 1} LedPWMDutyType;
 
+
+          
+  
+
+        
 #define LED_PWM_PERIOD    (u8)20
 
 /* Standard blinky values.  If other values are needed, add them at the end of the enum */
@@ -60,6 +65,8 @@ typedef struct
   LedActiveType eActiveState;
   LedPortType ePort;
 }LedConfigType;
+
+
 
 
 /******************************************************************************

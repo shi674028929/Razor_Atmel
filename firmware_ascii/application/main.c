@@ -14,6 +14,10 @@ All Global variable names shall start with "G_"
 /* New variables */
 volatile u32 G_u32SystemFlags = 0;                     /* Global system flags */
 volatile u32 G_u32ApplicationFlags = 0;                /* Global applications flags: set when application is successfully initialized */
+u32 u32UselessVariableForExample;
+u8 u8DataCheckBit;
+static u16 u16NumBit1;
+static u16 u16NumBit2;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* External global variables defined in other files (must indicate which file they are defined in) */
@@ -25,7 +29,14 @@ extern volatile u32 G_u32SystemTime1s;                 /* From board-specific so
 Global variable definitions with scope limited to this local application.
 Variable names shall start with "Main_" and be declared as static.
 ***********************************************************************************************************************/
+typedef struct 
 
+{ 
+
+ u8 u8ServerNumber; 
+ DrinkType asServingTray[MAX_DRINKS]; 
+ void* psNextServer; 
+} ServerType; 
 
 /***********************************************************************************************************************
 Main Program
@@ -39,10 +50,32 @@ contraints but must complete execution regardless of success or failure of start
 the 1ms period.
 ***********************************************************************************************************************/
 
-void main(void)
-{
-  G_u32SystemFlags |= _SYSTEM_INITIALIZING;
 
+  
+void main(void)
+{ 
+  u8 u8CurrentServer; 
+  ServerType sServer1; 
+  ServerType* psServerParser; 
+  psServerParser = &sServer1; 
+  sServer1.u8ServerNumber = 18; 
+  u8CurrentServer = psServerParser->u8ServerNumber; 
+
+
+
+
+  u8 u8Test=0xA5;
+  u8* pu8Example;
+  pu8Example=&u8Test;
+  *pu8Example+=1;
+  u8DataCheckBit=0xA5;
+  u16 u16NumBit1=0x1234;
+  u16 u16NumBit2=0x5678;
+  DrinkType aeDrinkArray1[] = {BEER,SHOOTER};
+  DrinkType aeDrinkArray2[] = {WINE,HIBALL};
+  u32UselessVariableForExample=MAX_DRINKS;
+  G_u32SystemFlags |= _SYSTEM_INITIALIZING;
+  
   /* Low level initialization */
   WatchDogSetup(); /* During development, does not reset processor if timeout */
   GpioSetup();
@@ -82,7 +115,11 @@ void main(void)
     
   /* Super loop */  
   while(1)
-  {
+  { 
+    u16NumBit1^=_BIT3;  /* Clear Operation */
+    u16NumBit2|=_BIT4;  /* Setting Operation */
+    u8DataCheckBit=u8DataCheckBit<<4;
+    u32UselessVariableForExample++;
     WATCHDOG_BONE();
     
     /* Drivers */
@@ -106,9 +143,9 @@ void main(void)
     UserApp3RunActiveState();
     
     /* System sleep*/
-    HEARTBEAT_OFF();
+    //HEARTBEAT_OFF();
     SystemSleep();
-    HEARTBEAT_ON();
+    //HEARTBEAT_ON();
     
   } /* end while(1) main super loop */
   
