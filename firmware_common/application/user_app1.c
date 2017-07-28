@@ -52,6 +52,8 @@ extern volatile u32 G_u32ApplicationFlags;             /* From main.c */
 extern volatile u32 G_u32SystemTime1ms;                /* From board-specific source file */
 extern volatile u32 G_u32SystemTime1s;                 /* From board-specific source file */
 
+static u8 UserApp_CursorPosition;
+extern u8 G_u8DebugScanfCharCount;
 
 /***********************************************************************************************************************
 Global variable definitions with scope limited to this local application.
@@ -87,7 +89,10 @@ Promises:
 */
 void UserApp1Initialize(void)
 {
- 
+  UserApp_CursorPosition = LINE1_START_ADDR;
+
+
+  
   /* If good initialization, set state to Idle */
   if( 1 )
   {
@@ -136,8 +141,177 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
+	static u16 u16Counter=0;
+	static u8 u8Num=0;
+	static u8 u8Num2=0;
+	static u8 au8Message[255];
+	static u8 au8Exchange[1];
+	static u8 au8Exchange2[1];
+	static u8 au8Exchange3[1];
+	static u8 au8Line1Message[20];
+	static u8 au8Line2Message[20];
+	static u8 u8PressNum=0;
+	static u8 au8MessageNum[1];
+	static u8 u8Line1Num=0;
+	static u8 u8Line2Num=0;
+	static u8 au8PressWord[255];
+	static u8 u8Button3Num=0;
+	static bool bISOK=FALSE;
+	static bool bOK=FALSE;
+	static u16 u16Counter2=0;
+	static u16 u16Counter3=0;
+	static u16 u16Counter4=0;
+	static bool bISOK2=FALSE;
+	static bool bISOK3=FALSE;
+	static bool bISOK4=FALSE;
+	
+		
+	if(WasButtonPressed(BUTTON3))      
+    {
+      ButtonAcknowledge(BUTTON3);
+	  u8Button3Num++;
 
-} /* end UserApp1SM_Idle() */
+	}
+    
+	if(u8Button3Num==2)
+	{
+		DebugScanf(au8PressWord);	
+		u8Button3Num=0;
+		bOK=TRUE;
+	}
+	
+	    if(bOK)
+		{
+			au8Message[u8Num2]=au8PressWord[u8Num2];
+			u8Num2++;
+			u16Counter2++;
+			
+			if(u16Counter2>256)
+			{
+				bISOK=TRUE;
+				bOK=FALSE;
+			}
+			
+		}
+	
+	
+	
+	
+	if(bISOK)
+	{
+		u16Counter++;
+		u16Counter3++;
+		
+		au8MessageNum[0]=au8Message[u8PressNum];
+		
+		if(au8MessageNum[0]!=NULL)
+		{
+			u8PressNum++;
+	 	}
+		else
+		{
+		  	if(u8PressNum>40)
+			{
+			  	bISOK2=TRUE;
+				bISOK=FALSE;
+			}
+			
+			if(u8PressNum<=40)
+			{
+			  	bISOK3=TRUE;
+				bISOK=FALSE;
+			}
+		}
+	}
+		
+		if(bISOK3)
+		{
+		  	u16Counter4++;
+			if(u8Line1Num<20)
+			{
+				au8Exchange[0]=au8Message[u8Line1Num];			
+				au8Line1Message[u8Line1Num]=au8Exchange[0];
+				u8Line1Num++;
+			}
+			
+			if(u8Line2Num<20)
+			{
+				au8Exchange3[0]=au8Message[u8Line2Num+20];
+				au8Line2Message[u8Line2Num]=au8Exchange3[0];
+				u8Line2Num++;
+			}
+			
+			if(u16Counter4==21)
+			{
+			  	bISOK4=TRUE;
+				
+			}
+			
+			if(bISOK4)
+			{
+				LCDMessage(UserApp_CursorPosition, au8Line1Message);
+				LCDMessage(LINE2_START_ADDR, au8Line2Message);
+				LCDCommand(LCD_ADDRESS_CMD | UserApp_CursorPosition);
+				bISOK3=FALSE;
+			}
+
+		}
+
+	
+		if(bISOK2)
+		{
+			u16Counter++;
+			if(u16Counter==260)
+			{
+				LCDMessage(UserApp_CursorPosition, au8Line2Message);
+				LCDMessage(LINE2_START_ADDR, au8Line1Message);
+				LCDCommand(LCD_ADDRESS_CMD | UserApp_CursorPosition);
+				u8Num=0;
+				u8Line1Num=0;
+				u8Line2Num=0;
+				au8Exchange2[0]=au8Message[0];
+			}
+			
+			if(u16Counter>200)
+			{
+				if(u8Num<u8PressNum-1)
+				{
+					au8Exchange[0]=au8Message[u8Num+1];
+					au8Message[u8Num]=au8Exchange[0];
+					u8Num++;			
+				}
+				
+				if(u8Num==u8PressNum-1)
+				{
+					au8Message[u8PressNum-1]=au8Exchange2[0];
+				}
+			}
+			
+			if(u16Counter>200+u8PressNum)
+			{
+				if(u8Line1Num<20)
+				{
+					au8Exchange[0]=au8Message[u8Line1Num];			
+					au8Line1Message[u8Line1Num]=au8Exchange[0];
+					u8Line1Num++;
+				}
+				
+				if(u8Line2Num<20)
+				{
+					au8Exchange3[0]=au8Message[u8Line2Num+20];
+					au8Line2Message[u8Line2Num]=au8Exchange3[0];
+					u8Line2Num++;
+				}
+			}
+			
+			if(u16Counter==1000)
+			{
+				u16Counter=0;
+				u8PressNum=0;
+			}
+		}
+	
+}/* end UserApp1SM_Idle() */
     
 
 /*-------------------------------------------------------------------------------------------------------------------*/
