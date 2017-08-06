@@ -1,8 +1,8 @@
 /**********************************************************************************************************************
-File: user_app2.c                                                                
+File: user_app3.c                                                                
 
 Description:
-This is a user_app2.c file template 
+This is a user_app3.c file template 
 
 ------------------------------------------------------------------------------------------------------------------------
 API:
@@ -11,10 +11,10 @@ Public functions:
 
 
 Protected System functions:
-void UserApp2Initialize(void)
+void UserApp3Initialize(void)
 Runs required initialzation for the task.  Should only be called once in main init section.
 
-void UserApp2RunActiveState(void)
+void UserApp3RunActiveState(void)
 Runs current task state.  Should only be called once in main loop.
 
 
@@ -24,10 +24,10 @@ Runs current task state.  Should only be called once in main loop.
 
 /***********************************************************************************************************************
 Global variable definitions with scope across entire project.
-All Global variable names shall start with "G_UserApp2"
+All Global variable names shall start with "G_UserApp3"
 ***********************************************************************************************************************/
 /* New variables */
-volatile u32 G_u32UserApp2Flags;                       /* Global state flags */
+volatile u32 G_u32UserApp3Flags;                       /* Global state flags */
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -37,14 +37,14 @@ extern volatile u32 G_u32ApplicationFlags;             /* From main.c */
 
 extern volatile u32 G_u32SystemTime1ms;                /* From board-specific source file */
 extern volatile u32 G_u32SystemTime1s;                 /* From board-specific source file */
-extern u8 G_u8DebugScanfCharCount;
+
 
 /***********************************************************************************************************************
 Global variable definitions with scope limited to this local application.
-Variable names shall start with "UserApp2_" and be declared as static.
+Variable names shall start with "UserApp3_" and be declared as static.
 ***********************************************************************************************************************/
-static fnCode_type UserApp2_StateMachine;            /* The state machine function pointer */
-//static u32 UserApp2_u32Timeout;                      /* Timeout counter used across states */
+static fnCode_type UserApp3_StateMachine;            /* The state machine function pointer */
+//static u32 UserApp3_u32Timeout;                      /* Timeout counter used across states */
 
 
 /**********************************************************************************************************************
@@ -61,7 +61,7 @@ Function Definitions
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 /*--------------------------------------------------------------------------------------------------------------------
-Function: UserApp2Initialize
+Function: UserApp3Initialize
 
 Description:
 Initializes the State Machine and its variables.
@@ -72,24 +72,24 @@ Requires:
 Promises:
   - 
 */
-void UserApp2Initialize(void)
+void UserApp3Initialize(void)
 {
   /* If good initialization, set state to Idle */
   if( 1 )
   {
-    UserApp2_StateMachine = UserApp2SM_Idle;
+    UserApp3_StateMachine = UserApp3SM_Idle;
   }
   else
   {
     /* The task isn't properly initialized, so shut it down and don't run */
-    UserApp2_StateMachine = UserApp2SM_FailedInit;
+    UserApp3_StateMachine = UserApp3SM_FailedInit;
   }
 
-} /* end UserApp2Initialize() */
+} /* end UserApp3Initialize() */
 
   
 /*----------------------------------------------------------------------------------------------------------------------
-Function UserApp2RunActiveState()
+Function UserApp3RunActiveState()
 
 Description:
 Selects and runs one iteration of the current state in the state machine.
@@ -102,11 +102,11 @@ Requires:
 Promises:
   - Calls the function to pointed by the state machine function pointer
 */
-void UserApp2RunActiveState(void)
+void UserApp3RunActiveState(void)
 {
-  UserApp2_StateMachine();
+  UserApp3_StateMachine();
 
-} /* end UserApp2RunActiveState */
+} /* end UserApp3RunActiveState */
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -120,29 +120,27 @@ State Machine Function Definitions
 
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Wait for ??? */
-static void UserApp2SM_Idle(void)
+static void UserApp3SM_Idle(void)
 {
-
-	
-	
-} /* end UserApp2SM_Idle() */
+    
+} /* end UserApp3SM_Idle() */
      
 #if 0
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Handle an error */
-static void UserApp2SM_Error(void)          
+static void UserApp3SM_Error(void)          
 {
   
-} /* end UserApp2SM_Error() */
+} /* end UserApp3SM_Error() */
 #endif
 
 
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* State to sit in if init failed */
-static void UserApp2SM_FailedInit(void)          
+static void UserApp3SM_FailedInit(void)          
 {
     
-} /* end UserApp2SM_FailedInit() */
+} /* end UserApp3SM_FailedInit() */
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/

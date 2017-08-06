@@ -1,37 +1,17 @@
 /**********************************************************************************************************************
-File: user_app1.h                                                                
-
-----------------------------------------------------------------------------------------------------------------------
-To start a new task using this user_app1 as a template:
-1. Follow the instructions at the top of user_app1.c
-2. Use ctrl-h to find and replace all instances of "user_app1" with "yournewtaskname"
-3. Use ctrl-h to find and replace all instances of "UserApp1" with "YourNewTaskName"
-4. Use ctrl-h to find and replace all instances of "USER_APP1" with "YOUR_NEW_TASK_NAME"
-5. Add #include yournewtaskname.h" to configuration.h
-6. Add/update any special configurations required in configuration.h (e.g. peripheral assignment and setup values)
-7. Delete this text (between the dashed lines)
-----------------------------------------------------------------------------------------------------------------------
+File: user_app2.h                                                                
 
 Description:
-Header file for user_app1.c
+Header file for user_app2.c
 
 **********************************************************************************************************************/
 
-#ifndef __USER_APP1_H
-#define __USER_APP1_H
+#ifndef __USER_APP2_H
+#define __USER_APP2_H
 
 /**********************************************************************************************************************
 Type Definitions
 **********************************************************************************************************************/
-typedef struct 
-{
-  	LedNumberType eLED;
-	u32 u32Time;
-	bool bOn;
-	LedRateType eCurrentRate;
-}LedCurrentType;
-
-
 
 
 /**********************************************************************************************************************
@@ -51,8 +31,8 @@ Function Declarations
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Protected functions                                                                                                */
 /*--------------------------------------------------------------------------------------------------------------------*/
-void UserApp1Initialize(void);
-void UserApp1RunActiveState(void);
+void UserApp2Initialize(void);
+void UserApp2RunActiveState(void);
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -63,12 +43,13 @@ void UserApp1RunActiveState(void);
 /***********************************************************************************************************************
 State Machine Declarations
 ***********************************************************************************************************************/
-static void UserApp1SM_Idle(void);    
+static void UserApp2SM_Idle(void);    
 
-static void UserApp1SM_Error(void);         
+static void UserApp2SM_Error(void);         
+static void UserApp2SM_FailedInit(void);        
 
 
-#endif /* __USER_APP1_H */
+#endif /* __USER_APP2_H */
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/
