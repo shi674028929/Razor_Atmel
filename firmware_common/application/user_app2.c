@@ -37,7 +37,7 @@ extern volatile u32 G_u32ApplicationFlags;             /* From main.c */
 
 extern volatile u32 G_u32SystemTime1ms;                /* From board-specific source file */
 extern volatile u32 G_u32SystemTime1s;                 /* From board-specific source file */
-
+extern u8 G_u8DebugScanfCharCount;
 
 /***********************************************************************************************************************
 Global variable definitions with scope limited to this local application.
@@ -122,7 +122,9 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp2SM_Idle(void)
 {
-    
+
+	
+	
 } /* end UserApp2SM_Idle() */
      
 #if 0

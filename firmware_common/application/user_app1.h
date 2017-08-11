@@ -23,6 +23,28 @@ Header file for user_app1.c
 /**********************************************************************************************************************
 Type Definitions
 **********************************************************************************************************************/
+typedef struct 
+{
+  	LedNumberType eLED;
+	u32 u32Time;
+	bool bOn;
+	LedRateType eCurrentRate;
+}LedCurrentType;
+
+typedef struct ledCurrentType2
+{
+  	LedNumberType eLED2;
+	u32 u32Time2;
+	bool bOn2;
+	LedRateType eCurrentRate2;
+	struct ledCurrentType2* psNext;
+}LedCurrentType2,*pLedCurrentType2;
+
+
+void CreateList(void);
+static u16 u16a=0;
+
+
 
 
 /**********************************************************************************************************************
