@@ -42,8 +42,15 @@ All Global variable names shall start with "G_UserApp1"
 ***********************************************************************************************************************/
 /* New variables */
 volatile u32 G_u32UserApp1Flags;                       /* Global state flags */
-
-
+u8 au8State1[]="Entering state 1";
+u8 au8State2[]="Entering state 2";
+u8 au8State1Message[] = "SATATE 1";
+u8 au8State2Message[] = "SATATE 2";
+static u16 u16Counter = 0;
+static u8 u8Counter2 = 0;
+static bool bISOK=FALSE;
+static bool bISOK2=FALSE;
+static u8 au8CommandFormat[1];
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Existing variables (defined in other files -- should all contain the "extern" keyword) */
 extern volatile u32 G_u32SystemFlags;                  /* From main.c */
@@ -51,6 +58,7 @@ extern volatile u32 G_u32ApplicationFlags;             /* From main.c */
 
 extern volatile u32 G_u32SystemTime1ms;                /* From board-specific source file */
 extern volatile u32 G_u32SystemTime1s;                 /* From board-specific source file */
+extern u8 G_u8DebugScanfCharCount;
 
 
 /***********************************************************************************************************************
@@ -68,6 +76,86 @@ Function Definitions
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Public functions                                                                                                   */
 /*--------------------------------------------------------------------------------------------------------------------*/
+static void UserApp1_state1(void)
+{
+  	DebugPrintf(au8State1);
+	DebugLineFeed();
+	LCDMessage(LINE1_START_ADDR, au8State1Message); 
+	LedOn(WHITE);
+	LedOn(BLUE);
+	LedOn(CYAN);
+	LedOn(LCD_RED);
+	LedOn(LCD_BLUE);
+	PWMAudioOff(BUZZER1);
+	PWMAudioOff(BUZZER2);
+	UserApp1_StateMachine = UserApp1SM_Idle;
+}
+
+static void UserApp1_state2(void)
+{
+  	DebugPrintf(au8State2);
+	DebugLineFeed();
+	LCDMessage(LINE1_START_ADDR, au8State2Message); 
+	LedBlink(GREEN, LED_1HZ); 
+	LedBlink(YELLOW , LED_2HZ); 
+	LedBlink(ORANGE , LED_4HZ);
+	LedBlink(RED , LED_8HZ);
+	LedOn(LCD_RED);
+	LedOn(LCD_GREEN);
+	bISOK = TRUE;
+	UserApp1_StateMachine = UserApp1SM_Idle;
+}
+
+void State2Audio()
+{
+  	u16Counter++;
+	
+  	if(u16Counter==1000)
+	{
+		bISOK2 = TRUE;
+		u16Counter = 0;		
+	}
+	
+	if(bISOK2)
+	{
+	  	u8Counter2++;
+		PWMAudioSetFrequency(BUZZER1, 200); 
+		PWMAudioSetFrequency(BUZZER2, 200); 
+		PWMAudioOn(BUZZER1);
+		PWMAudioOn(BUZZER2);
+		
+		if(u8Counter2==100)
+		{
+			PWMAudioOff(BUZZER1);
+			PWMAudioOff(BUZZER2);
+			u8Counter2 = 0;
+			bISOK2 = FALSE;
+		}
+	}
+}
+
+void DataZero()
+{
+  	au8CommandFormat[0]= 0 ;
+  	u16Counter = 0;
+	u8Counter2 = 0;
+	LedOff(WHITE);
+	LedOff(BLUE);
+	LedOff(CYAN);
+	LedOff(RED);
+	LedOff(GREEN);
+	LedOff(YELLOW);
+	LedOff(ORANGE);
+	LedOff(LCD_RED);
+	LedOff(LCD_GREEN);
+	LedOff(LCD_BLUE);
+	PWMAudioOff(BUZZER1);
+	PWMAudioOff(BUZZER2); 
+	LCDCommand(LCD_CLEAR_CMD);
+	bISOK = FALSE;
+	bISOK2 = FALSE;
+}
+
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 /* Protected functions                                                                                                */
@@ -135,8 +223,41 @@ State Machine Function Definitions
 /*-------------------------------------------------------------------------------------------------------------------*/
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
-{
-
+{	
+  
+	DebugScanf(au8CommandFormat);
+	if(au8CommandFormat[0]=='1')
+	{
+	  	DebugLineFeed();
+	  	DataZero();
+	  	UserApp1_StateMachine = UserApp1_state1;
+	}
+	
+	if(WasButtonPressed(BUTTON1))
+	{
+	  	ButtonAcknowledge(BUTTON1);
+		DataZero();
+		UserApp1_StateMachine = UserApp1_state1;
+	}
+	
+	if(au8CommandFormat[0]=='2')
+	{
+	  	DebugLineFeed();
+	  	DataZero();
+	  	UserApp1_StateMachine = UserApp1_state2;
+	}
+	
+	if(WasButtonPressed(BUTTON2))
+	{
+	  	ButtonAcknowledge(BUTTON2);
+		DataZero();
+		UserApp1_StateMachine = UserApp1_state2;
+	}
+	
+	if(bISOK)
+	{
+	  	State2Audio();
+	}	
 } /* end UserApp1SM_Idle() */
     
 
