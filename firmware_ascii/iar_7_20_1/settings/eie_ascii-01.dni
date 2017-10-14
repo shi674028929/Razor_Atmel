@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=145133981
+Checksum=1580102226
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0

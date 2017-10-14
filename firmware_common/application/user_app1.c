@@ -211,7 +211,7 @@ static void UserApp1SM_Idle(void)
 			au8TestMessage[0] = 0x5B;
 			
 			/*Check for failed messages*/
-			if(G_au8AntApiCurrentMessageBytes[ANT_TICK_MSG_EVENT_CODE_INDEX]== EVENT_RX_FAIL)
+			if(G_au8AntApiCurrentMessageBytes[ANT_TICK_MSG_EVENT_CODE_INDEX]== EVENT_TRANSFER_TX_FAILED)
 			{
 				au8TestMessage[3]++;
 				if(au8TestMessage[3] == 0)
