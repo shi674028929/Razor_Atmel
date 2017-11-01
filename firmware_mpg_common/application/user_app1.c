@@ -103,6 +103,7 @@ void UserApp1Initialize(void)
   
   /* Clear screen and place start messages */
 #ifdef EIE1
+
   LCDCommand(LCD_CLEAR_CMD);
   LCDMessage(LINE1_START_ADDR, au8WelcomeMessage); 
   LCDMessage(LINE2_START_ADDR, au8Instructions); 
@@ -112,6 +113,7 @@ void UserApp1Initialize(void)
 #endif /* EIE1 */
   
 #ifdef MPG2
+
   PixelAddressType sStringLocation = {LCD_SMALL_FONT_LINE0, LCD_LEFT_MOST_COLUMN}; 
   LcdClearScreen();
   LcdLoadString(au8WelcomeMessage, LCD_FONT_SMALL, &sStringLocation); 
