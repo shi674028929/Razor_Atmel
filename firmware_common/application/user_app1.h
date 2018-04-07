@@ -57,7 +57,8 @@ State Machine Declarations
 static void UserApp1SM_Idle(void);    
 
 static void UserApp1SM_Error(void);         
-
+static void Delay(u8);
+static void Voltage_Conversion(u16);
 
 #endif /* __USER_APP1_H */
 

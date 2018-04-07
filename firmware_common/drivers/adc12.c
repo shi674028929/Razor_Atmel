@@ -275,6 +275,7 @@ Promises:
 */
 void Adc12DefaultCallback(u16 u16Result_)
 {
+  
 } /* End Adc12DefaultCallback() */
 
 
